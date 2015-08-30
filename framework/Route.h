@@ -12,12 +12,15 @@
 #ifndef SAFAIA_FRAMEWORK_ROUTE_H
 #define SAFAIA_FRAMEWORK_ROUTE_H
 
-class Route{
+namespace Safaia{
+    class Route{
 
-public:
-    Route(std::string path, std::string method, std::function<std::string(Request)> function){
+    public:
+        Route(std::string path, std::string method, std::function<std::string(Safaia::Request)> function){
 
-    }
-};
+        }
+    };
+}
+
 
 #endif //SAFAIA_FRAMEWORK_ROUTE_H

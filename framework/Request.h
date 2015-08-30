@@ -10,25 +10,27 @@
 #ifndef SAFAIA_FRAMEWORK_REQUEST_H
 #define SAFAIA_FRAMEWORK_REQUEST_H
 
-class Request{
+namespace Safaia{
+    class Request{
 
-public:
+    public:
 
-    std::string request_url = "";
-    std::string method = "";
-    std::string accept = "";
-    std::string accept_encoding = "";
-    std::string accept_language = "";
-    std::string body = "";
-    std::string cache_control = "";
-    std::string cookie = "";
-    std::string host = "";
-    std::string referer = "";
-    std::string user_agent = "";
+        std::string request_url = "";
+        std::string method = "";
+        std::string accept = "";
+        std::string accept_encoding = "";
+        std::string accept_language = "";
+        std::string body = "";
+        std::string cache_control = "";
+        std::string cookie = "";
+        std::string host = "";
+        std::string referer = "";
+        std::string user_agent = "";
 
-    Request(std::string str){
+        Request(std::string str){
 
-    }
-};
+        }
+    };
+}
 
 #endif //SAFAIA_FRAMEWORK_REQUEST_H
