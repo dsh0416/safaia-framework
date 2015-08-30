@@ -4,10 +4,12 @@
  * Create Time: 30 Aug 2015
  * Last Edited Time: 30 Aug 2015
  * */
+
 #include <iostream>
+#include <vector>
+#include <queue>
 #include "Log.h"
 #include "Route.h"
-#include <queue>
 
 #ifndef SAFAIA_FRAMEWORK_SAFAIA_H
 #define SAFAIA_FRAMEWORK_SAFAIA_H
@@ -35,6 +37,11 @@ class Safaia {
         this->configured = true;
     }
 
+    // IO Loop
+    void loop(){
+
+    }
+
 public:
 
     Safaia(int port, int max_connection){
@@ -60,6 +67,7 @@ public:
         log.info("Server","Safaia server has started");
         while (!soft_stop){
             //IO Loop
+            loop();
         }
         log.info("Server","Safaia server has stopped");
     }

@@ -7,10 +7,9 @@
 
 #include "framework/Safaia.h"
 
-// Server Configuration Start
+// Server Configuration
 const int port = 21411;
 const int max_connections = 1024;
-// Server Configuration End
 
 int main() {
     Safaia server = Safaia::Safaia(port, max_connections);
