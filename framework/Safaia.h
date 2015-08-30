@@ -6,6 +6,7 @@
  * */
 #include <iostream>
 #include "Log.h"
+#include "Route.h"
 
 #ifndef SAFAIA_FRAMEWORK_SAFAIA_H
 #define SAFAIA_FRAMEWORK_SAFAIA_H
@@ -28,16 +29,26 @@ public:
     // Server configuration
     void config(int port, int max_connection){
         this->port = port;
+        if (port < 0 || port > 65535) {
+            log.error("Config", "Port out of range");
+            return;
+        }
         this->max_connection = max_connection;
         this->configured = true;
+    }
+
+    // Route Definition
+    void add_route(Route route){
+
     }
 
     // Start running the server
     void run(){
         // Initializing
-        log.info("Initial","Safaia server is initializing");
+        log.info("Server","Safaia server is initializing");
         if (!configured){
             log.error("Config","No Config Detected");
+            log.error("Server","Initialization Failed");
             return;
         }
     }

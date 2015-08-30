@@ -6,6 +6,8 @@
  * */
 
 #include "framework/Safaia.h"
+#include "framework/Request.h"
+#include <functional>
 
 // Server Configuration Start
 const int port = 21411;
@@ -14,6 +16,7 @@ const int max_connections = 1024;
 
 int main() {
     Safaia server = Safaia::Safaia(port, max_connections);
+    server.add_route(Route("/index", "GET", [](Request req){return "Hello World";}));
     server.run();
     return 0;
 }
