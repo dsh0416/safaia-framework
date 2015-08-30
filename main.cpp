@@ -6,8 +6,6 @@
  * */
 
 #include "framework/Safaia.h"
-#include "framework/Request.h"
-#include <functional>
 
 // Server Configuration Start
 const int port = 21411;
