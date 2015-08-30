@@ -19,6 +19,7 @@ public:
     std::string accept = "";
     std::string accept_encoding = "";
     std::string accept_language = "";
+    std::string body = "";
     std::string cache_control = "";
     std::string cookie = "";
     std::string host = "";

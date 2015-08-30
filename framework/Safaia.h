@@ -61,17 +61,19 @@ public:
         while (!soft_stop){
             //IO Loop
         }
-
+        log.info("Server","Safaia server has stopped");
     }
 
     // Soft Stop running the server
     void stop(){
         soft_stop = true;
+        log.info("Server","Safaia server is stopping");
     }
 
     // Hard Stop running the server
     void stop_force(){
-
+        log.warning("Server","Safaia server force stopping");
+        delete(this);
     }
 
 };
