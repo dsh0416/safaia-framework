@@ -11,7 +11,7 @@ Safaia is designed to be an easy developing, maintaining, deploying web framewor
 - Easy route definition
 - Regulation expression supported
 - EventIO model
-- Running on one process and one thread
+- Running on one process and selectable threads
 
 ## Feedback
 Using the `ISSUE` on GitHub
