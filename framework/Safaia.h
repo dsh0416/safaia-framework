@@ -7,6 +7,7 @@
 #include <iostream>
 #include "Log.h"
 #include "Route.h"
+#include <queue>
 
 #ifndef SAFAIA_FRAMEWORK_SAFAIA_H
 #define SAFAIA_FRAMEWORK_SAFAIA_H
@@ -17,14 +18,11 @@ class Safaia {
     Log log;
 
     bool configured = false;
+    bool soft_stop = false;
     int port;
     int max_connection;
-
-public:
-
-    Safaia(int port, int max_connection){
-        config(port,max_connection);
-    }
+    std::vector<Route> vec_routes;
+    std::queue<Request> que_reqs;
 
     // Server configuration
     void config(int port, int max_connection){
@@ -37,9 +35,15 @@ public:
         this->configured = true;
     }
 
+public:
+
+    Safaia(int port, int max_connection){
+        config(port,max_connection);
+    }
+
     // Route Definition
     void add_route(Route route){
-
+        vec_routes.push_back(route);
     }
 
     // Start running the server
@@ -51,10 +55,22 @@ public:
             log.error("Server","Initialization Failed");
             return;
         }
+
+        // Server started
+        log.info("Server","Safaia server has started");
+        while (!soft_stop){
+            //IO Loop
+        }
+
     }
 
-    // Stop running the server
+    // Soft Stop running the server
     void stop(){
+        soft_stop = true;
+    }
+
+    // Hard Stop running the server
+    void stop_force(){
 
     }
 
