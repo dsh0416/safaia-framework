@@ -8,12 +8,8 @@
 #include "framework/Safaia.h"
 using namespace Safaia;
 
-// Server Configuration
-const auto bind_port = 21411;
-const auto max_connection = 1024;
-
 int main(){
-    auto server = Server(bind_port, max_connection);
+    auto server = Server();
 
     server.add_route(Route("/index", "GET", [](Request req){
         return "Hello World";

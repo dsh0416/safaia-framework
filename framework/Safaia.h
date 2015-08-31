@@ -26,19 +26,9 @@ namespace Safaia{
         bool soft_stop = false;
         int port;
         int max_connection;
+        int thread;
         std::vector<Route> vec_routes;
         std::queue<Request> que_reqs;
-
-        // Server configuration
-        void config(int port, int max_connection){
-            this->port = port;
-            if (port < 0 || port > 65535) {
-                log.error("Config", "Port out of range");
-                return;
-            }
-            this->max_connection = max_connection;
-            this->configured = true;
-        }
 
         // IO Loop
         void loop(){
@@ -47,8 +37,9 @@ namespace Safaia{
 
     public:
 
-        Server(int port, int max_connection){
-            config(port,max_connection);
+        Server(){
+            // Default Configuration Port:21411 MaxConnection:1024 Thread:4
+            config(21411,1024,4);
         }
 
         // Route Definition
@@ -86,6 +77,19 @@ namespace Safaia{
             log.warning("Server","Safaia server force stopping");
             delete(this);
         }
+
+        // Server configuration
+        void config(int port, int max_connection, int thread){
+            this->port = port;
+            if (port < 0 || port > 65535) {
+                log.error("Config", "Port out of range");
+                return;
+            }
+            this->thread = thread;
+            this->max_connection = max_connection;
+            this->configured = true;
+        }
+
 
     };
 }
