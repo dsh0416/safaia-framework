@@ -1,3 +1,9 @@
+<!Doctype html>
 <html>
-<h1><=$num=></h1>
+<head>
+	<title> Request Url </title>
+</head>
+<body>
+	<h1> <=$url=> </h1>
+</body>
 </html>

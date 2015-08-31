@@ -17,7 +17,7 @@ int main(){
 
     server.add_route(Route("/request_url","GET", [](Request req){
         std::map<std::string,std::string>dic;
-        dic.insert(std::pair<std::string,std::string>("num",req.request_url));
+        dic.insert(std::pair<std::string,std::string>("url",req.request_url));
         return ecp("./views/index.ecp",dic);
     }));
 
