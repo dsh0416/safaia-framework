@@ -27,7 +27,7 @@ namespace Safaia{
         return str;
     }
 
-    std::string ecp (std::string ecp_path, std::map<std::string,std::string> dic){
+    std::string ecp (std::string ecp_path, EcpAtom atom){
 
         // Read View File from Disk
         std::ifstream file;
@@ -40,15 +40,24 @@ namespace Safaia{
         }
         file.close();
 
-        for(auto it = dic.begin(); it!=dic.end(); it++){
+        for(auto it = atom.dic.begin(); it!=atom.dic.end(); it++){
             Safaia::replace_all(view, "<=$" + it->first + "=>", it->second);
         }
 
         return view;
     }
 
+    class EcpAtom {
+    public:
+        std::map<std::string,std::string> dic;
+        EcpAtom(){
+        }
 
+        void store(std::string key, std::string val){
+            dic.insert(std::pair<std::string,std::string>(key,val));
+        }
 
+    };
 
 }
 
