@@ -2,10 +2,11 @@
  * This is the request class of Safaia
  * Created By Delton Ding (dsh0416@gmail.com)
  * Create Time: 30 Aug 2015
- * Last Edited Time: 30 Aug 2015
+ * Last Edited Time: 2 Sep 2015
  * */
 
 #include <string>
+#include <sstream>
 
 #ifndef SAFAIA_FRAMEWORK_REQUEST_H
 #define SAFAIA_FRAMEWORK_REQUEST_H
@@ -15,8 +16,9 @@ namespace Safaia{
 
     public:
 
-        std::string request_url = "";
         std::string method = "";
+        std::string request_url = "";
+        std::string protocol = "";
         std::string accept = "";
         std::string accept_encoding = "";
         std::string accept_language = "";
@@ -28,7 +30,9 @@ namespace Safaia{
         std::string user_agent = "";
 
         Request(std::string str){
-
+            std::stringstream ss;
+            ss << str;
+            ss >> method >> request_url >> protocol;
         }
     };
 }
