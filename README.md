@@ -10,8 +10,8 @@ Safaia is designed to be an easy developing, maintaining, deploying web framewor
 - High concurrency
 - Easy route definition
 - Regulation expression supported
-- Ecp view rendering engine (for generating HTML page)
-- EventIO model
+- Html view rendering engine (for generating HTML page)
+- Internal Unit Test Engine
 - Running on one process and selectable threads
 
 ## Feedback
