@@ -18,8 +18,6 @@ int main(){
         return Resp(ecp("./views/request_url.html",atom));
     }));
 
-    server.log.ansi_color = false;
-
     server.run();
     return 0;
 }

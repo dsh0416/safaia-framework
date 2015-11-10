@@ -8,17 +8,18 @@
 
 
 class Log{
+    int is_stdout = isatty(fileno(stdout));
 public:
 
     bool ansi_color = true;
 
     void info(std::string tag, std::string str){
-        std::cout << (ansi_color ? GREEN : "") << "[Info] " << tag << ": "<< str << (ansi_color ? RESET : "") << std::endl;
+        std::cout << (ansi_color && is_stdout ? GREEN : "") << "[Info] " << tag << ": "<< str << (ansi_color && is_stdout ? RESET : "") << std::endl;
     }
     void warning(std::string tag, std::string str){
-        std::cout << (ansi_color ? YELLOW : "") <<"[Warning] " << tag << ": "<< str << (ansi_color ? RESET : "") << std::endl;
+        std::cout << (ansi_color && is_stdout ? YELLOW : "") <<"[Warning] " << tag << ": "<< str << (ansi_color && is_stdout ? RESET : "") << std::endl;
     }
     void error(std::string tag, std::string str){
-        std::cerr << (ansi_color ? RED : "") << "[Error] " << tag << ": "<< str << (ansi_color ? RESET : "") << std::endl;
+        std::cerr << (ansi_color && is_stdout ? RED : "") << "[Error] " << tag << ": "<< str << (ansi_color && is_stdout ? RESET : "") << std::endl;
     }
 };
