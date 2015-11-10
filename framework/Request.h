@@ -12,7 +12,7 @@
 #define SAFAIA_FRAMEWORK_REQUEST_H
 
 namespace Safaia{
-    class Request{
+    class Req{
 
     public:
 
@@ -29,7 +29,7 @@ namespace Safaia{
         std::string referer = "";
         std::string user_agent = "";
 
-        Request(std::string str){
+        Req(std::string str){
             std::stringstream ss;
             ss << str;
             ss >> method >> request_url >> protocol;

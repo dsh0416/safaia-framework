@@ -20,12 +20,9 @@ namespace Safaia{
 
     class Server {
 
-        Log log = Log();
-
-        bool configured = false;
         bool soft_stop = false;
         std::vector<Route> vec_routes;
-        std::queue<Request> que_reqs;
+        std::queue<Req> que_reqs;
 
         // IO Loop
         void loop(){
@@ -33,10 +30,12 @@ namespace Safaia{
         }
 
     public:
+        Log log = Log();
         int port = 21411;
         int thread = 4;
 
         Server(){
+
         }
 
         // Route Definition
@@ -48,11 +47,6 @@ namespace Safaia{
         void run(){
             // Initializing
             log.info("Server","Safaia server is initializing");
-            if (!configured){
-                log.error("Config","No Config Detected");
-                log.error("Server","Initialization Failed");
-                return;
-            }
 
             // Server started
             log.info("Server","Safaia server has started");

@@ -9,6 +9,7 @@ Safaia is designed to be an easy developing, maintaining, deploying light web fr
 - High performance
 - High concurrency
 - Easy route definition
+- Easy Log system
 - Regulation expression supported
 - Html view rendering engine (for generating HTML page)
 - Running on one process and selectable threads

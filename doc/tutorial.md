@@ -1,7 +1,7 @@
 # Tutorial
 
 ## Brief Introduction
-Safaia framework is designed for high performance and concurrency web server with C++. It's easy to use, test and deploy. 
+Safaia framework is designed for high performance and concurrency light web framework with C++. It's easy to use, test and deploy. 
 
 ## Getting Started
 First off, you should clone the whole project to your own disk. To make this happen, open your Terminal, and type the following command.
@@ -13,3 +13,54 @@ Safaia framework use `CMake` to build the project. It's easy to find the `CMakeL
 After you build the server, you could just run the executive file.
 
 Type `http://127.0.0.1:21411/` in your browser and you would see a `Hello World` page in your browser. We will later describe how it works in Safaia-framework.
+
+## Hello World in Ten Lines
+`main.cpp` is the entrance of the whole program with `int main()`. The default `main.cpp` gives some examples, you could delete them and create your own. Let's start your project with the following code.
+
+```
+#include "framework/Safaia.h"
+using namespace Safaia;
+int main(){
+    auto server = Server();
+    server.add_route(Route("/", "GET", [](Req req){
+        return Resp("Hello World");
+    }));
+    server.run();
+    return 0;
+}
+```
+
+## Route
+In Safaia framework, a route definition includes two parts: HTTP method and a Url-Matching pattern.
+
+```
+server.add_route(Route("/", "GET", [](Req req){
+    .. show something ..
+}));
+server.add_route(Route("/", "POST", [](Req req){
+    .. create something ..
+}));
+server.add_route(Route("/", "PUT", [](Req req){
+    .. replace something ..
+}));
+server.add_route(Route("/", "PATCH", [](Req req){
+    .. modify something ..
+}));
+server.add_route(Route("/", "DELETE", [](Req req){
+    .. annihilate something ..
+}));
+server.add_route(Route("/", "OPTIONS", [](Req req){
+    .. appease something ..
+}));
+server.add_route(Route("/", "LINK", [](Req req){
+    .. affiliate something ..
+}));
+server.add_route(Route("/", "UNLINK", [](Req req){
+    .. separate something ..
+}));
+server.add_route(Route("/", "WTF", [](Req req){
+    .. do what the f**k you want to something ..
+}));
+```
+
+The first route that matches the request is invoked.
