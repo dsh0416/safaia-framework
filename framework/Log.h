@@ -5,13 +5,21 @@
 
 #include <iostream>
 #include <string>
+#include <regex>
 
 
 class Log{
     int is_stdout = isatty(fileno(stdout));
+
 public:
 
     bool ansi_color = true;
+
+    Log(){
+        // CLion still does not support ASCII color control, stop the feature by default
+        if (std::regex_match(std::string(getenv("XPC_SERVICE_NAME")), std::regex("(.*)(CLion)(.*)")))
+            ansi_color = false;
+    }
 
     void info(std::string tag, std::string str){
         std::cout << (ansi_color && is_stdout ? GREEN : "") << "[Info] " << tag << ": "<< str << (ansi_color && is_stdout ? RESET : "") << std::endl;
