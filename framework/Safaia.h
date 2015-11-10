@@ -1,10 +1,3 @@
-/*
- * This is the main class of Safaia
- * Created By Delton Ding (dsh0416@gmail.com)
- * Create Time: 30 Aug 2015
- * Last Edited Time: 31 Aug 2015
- * */
-
 #include <iostream>
 #include <vector>
 #include <queue>
@@ -12,9 +5,6 @@
 #include "Route.h"
 #include "Ecp.h"
 #include <sys/socket.h>
-
-#ifndef SAFAIA_FRAMEWORK_SAFAIA_H
-#define SAFAIA_FRAMEWORK_SAFAIA_H
 
 namespace Safaia{
 
@@ -71,5 +61,3 @@ namespace Safaia{
 
     };
 }
-
-#endif //SAFAIA_FRAMEWORK_SAFAIA_H
