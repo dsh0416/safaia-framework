@@ -23,25 +23,32 @@ namespace Safaia{
         struct sockaddr_in addr;
 
         // TODO: Message Handle
-        static void serve(int fd, Log &log){
-            char buf[BUF_LEN];
-            read(fd, buf, BUF_LEN);
-            if (!strncmp(buf, "GET", 3)){
-                std::string header = "HTTP/1.1 200 OK\r\nContent-type: text/html\r\n\r\n";
-                std::string content = "<html><body><h1> Hello Safaia! </h1></body></html>\n";
-                log.info("Server", "Received a Request\n" + std::string(buf));
-                write(fd, header.c_str(), header.length());
-                write(fd, content.c_str(), content.length());
-                close(fd);
-            } else {
-                close(fd);
+        static void serve(int sockfd, Log &log, bool &soft_stop){
+            int fd;
+            while (!soft_stop){
+                fd = accept(sockfd, NULL, NULL);
+                char buf[BUF_LEN];
+                read(fd, buf, BUF_LEN);
+                if (!strncmp(buf, "GET", 3)){
+                    std::string header = "HTTP/1.1 200 OK\r\nContent-type: text/html\r\n\r\n";
+                    std::string content = "<html><body><h1> Hello Safaia! </h1></body></html>\n";
+                    log.info("Server", "Received a Request\n" + std::string(buf));
+                    write(fd, header.c_str(), header.length());
+                    write(fd, content.c_str(), content.length());
+                    close(fd);
+                } else {
+                    soft_stop = true;
+                    close(fd);
+                }
             }
+
         }
 
         // IO Loop
         void loop(){
-            newfd = accept(sockfd, NULL, NULL);
-            std::async(std::launch::async, serve, newfd, std::ref(log));
+            for (int i = 0; i < thread; i++){
+                std::async(std::launch::async, serve, std::ref(sockfd), std::ref(log), std::ref(soft_stop));
+            }
         }
 
     public:
@@ -91,10 +98,8 @@ namespace Safaia{
             // Server Started
             log.info("Server","Safaia Server has Started at Port " + std::to_string(port));
 
-            while (!soft_stop){
-                //IO Loop
-                loop();
-            }
+            loop();
+
             log.info("Server","Safaia Server has Stopped");
         }
 
