@@ -3,6 +3,8 @@
 #include <queue>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <thread>
+#include <future>
 #include "Log.h"
 #include "Route.h"
 #include "Ecp.h"
@@ -15,27 +17,31 @@ namespace Safaia{
 
         bool soft_stop = false;
         std::vector<Route> vec_routes;
-        std::queue<Req> que_reqs;
 
-        int sockfd, err, newfd;
+        int sockfd, err;
+        int newfd = -1;
         struct sockaddr_in addr;
+
+        // TODO: Message Handle
+        static void serve(int fd, Log &log){
+            char buf[BUF_LEN];
+            read(fd, buf, BUF_LEN);
+            if (!strncmp(buf, "GET", 3)){
+                std::string header = "HTTP/1.1 200 OK\r\nContent-type: text/html\r\n\r\n";
+                std::string content = "<html><body><h1> Hello Safaia! </h1></body></html>\n";
+                log.info("Server", "Received a Request\n" + std::string(buf));
+                write(fd, header.c_str(), header.length());
+                write(fd, content.c_str(), content.length());
+                close(fd);
+            } else {
+                close(fd);
+            }
+        }
 
         // IO Loop
         void loop(){
             newfd = accept(sockfd, NULL, NULL);
-            log.info("Server", "Recieved a Request");
-
-            // TODO: Handle Message
-            char buf[BUF_LEN];
-            read(newfd, buf, BUF_LEN);
-            if (!strncmp(buf, "GET", 3)){
-                std::string header = "HTTP/1.1 200 OK\r\nContent-type: text/html\r\n\r\n";
-                std::string content = "<html><body><h1> Hello Safaia! </h1></body></html>\n";
-                write(newfd, header.c_str(), header.length());
-                write(newfd, content.c_str(), content.length());
-            }
-            // Close Connection
-            close(newfd);
+            std::async(std::launch::async, serve, newfd, std::ref(log));
         }
 
     public:
@@ -73,7 +79,7 @@ namespace Safaia{
 
             // Binding Address and Port
             if(bind(sockfd, (struct sockaddr *)&addr, sizeof(struct sockaddr_in))){
-                log.error("Server", "Port Binding Failed at Port" + std::to_string(port));
+                log.error("Server", "Port Binding Failed at Port " + std::to_string(port));
                 exit(0);
             } else {
                 log.info("Server", "Port Binding Succeeded!");
