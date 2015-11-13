@@ -1,7 +1,7 @@
 #define RESET "\033[0m"
-#define GREEN "\033[32m" /* Green */
-#define YELLOW "\033[33m" /* Yellow */
-#define RED "\033[1m\033[31m" /* Bold Red */
+#define GREEN "\033[32m" // Green
+#define YELLOW "\033[33m" // Yellow
+#define RED "\033[1m\033[31m" // Bold Red
 
 #include <iostream>
 #include <string>
@@ -16,7 +16,7 @@ public:
     bool ansi_color = true;
 
     Log(){
-        // CLion still does not support ASCII color control, stop the feature by default
+        // CLion still does not support ASCII color control, disable the feature by default
         if (std::regex_match(std::string(getenv("XPC_SERVICE_NAME")), std::regex("(.*)(CLion)(.*)")))
             ansi_color = false;
     }
