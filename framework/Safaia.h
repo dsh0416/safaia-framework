@@ -79,6 +79,10 @@ namespace Safaia{
                 log.info("Server", "Socket Creation Succeeded!");
             }
 
+            if (thread < 1){
+                log.error("Server", "Thread Number Error!");
+            }
+
             memset(&addr, 0, sizeof(addr));
             addr.sin_family = AF_INET;
             addr.sin_port = htons(port);
