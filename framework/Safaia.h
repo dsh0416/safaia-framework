@@ -34,13 +34,13 @@ namespace Safaia{
                 log.info("Server", "Received a Request\n" + std::string(buf));
 
                 for(int i = 0; i < size; i++){
-                    if (vec_routes[i].is_regex && vec_routes[i].method == req.method && vec_routes[i].path == req.request_url){
+                    if (!vec_routes[i].is_regex && vec_routes[i].method == req.method && vec_routes[i].path == req.request_url){
                         std::string header = "HTTP/1.1 200 OK\r\nContent-type: text/html\r\n\r\n";
                         std::string content = vec_routes[i].function(req).content;
                         write(fd, header.c_str(), header.length());
                         write(fd, content.c_str(), content.length());
                         close(fd);
-                    } else if (!vec_routes[i].is_regex && vec_routes[i].method == req.method && std::regex_match(req.request_url, vec_routes[i].regex_path)) {
+                    } else if (vec_routes[i].is_regex && vec_routes[i].method == req.method && std::regex_match(req.request_url, vec_routes[i].regex_path)) {
                         std::string header = "HTTP/1.1 200 OK\r\nContent-type: text/html\r\n\r\n";
                         std::string content = vec_routes[i].function(req).content;
                         write(fd, header.c_str(), header.length());
