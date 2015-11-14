@@ -70,6 +70,14 @@ namespace Safaia{
             vec_routes.push_back(route);
         }
 
+        void add_route(std::string method, std::string path, std::function<Safaia::Resp(Safaia::Req)> function){
+            vec_routes.push_back(Route(method, path, function));
+        }
+
+        void add_route(std::string method, std::regex path, std::function<Safaia::Resp(Safaia::Req)> function){
+            vec_routes.push_back(Route(method, path, function));
+        }
+
         // Start running the server
         void run(){
             // Initializing

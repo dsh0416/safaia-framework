@@ -1,10 +1,3 @@
-/*
- * This is the HTML Rendering class of Safaia
- * Created By Delton Ding (dsh0416@gmail.com)
- * Create Time: 30 Aug 2015
- * Last Edited Time: 1 Sep 2015
- * */
-
 #include <string>
 #include <map>
 #include <fstream>
@@ -57,7 +50,7 @@ namespace Safaia{
                 file.open(ecp_path);
                 std::string temp_str;
 
-                while(file >> temp_str){
+                while(getline(file, temp_str)){
                     view += temp_str;
                     view += "\n";
                 }
@@ -75,7 +68,7 @@ namespace Safaia{
             file.open(ecp_path);
             std::string temp_str;
 
-            while(file >> temp_str){
+            while(getline(file, temp_str)){
                 view += temp_str;
                 view += "\n";
             }

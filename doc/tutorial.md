@@ -22,7 +22,7 @@ Type `http://127.0.0.1:21411/` in your browser and you would see a `Hello World`
 using namespace Safaia;
 int main(){
     auto server = Server();
-    server.add_route(Route("/", "GET", [](Req req){
+    server.add_route(Route("GET", "/", [](Req req){
         return Resp("Hello World");
     }));
     server.run();
@@ -34,31 +34,31 @@ int main(){
 In Safaia framework, a route definition includes two parts: HTTP method and a Url-Matching pattern.
 
 ```
-server.add_route(Route("/", "GET", [](Req req){
+server.add_route(Route("GET", "/", [](Req req){
     .. show something ..
 }));
-server.add_route(Route("/", "POST", [](Req req){
+server.add_route(Route("POST", "/", [](Req req){
     .. create something ..
 }));
-server.add_route(Route("/", "PUT", [](Req req){
+server.add_route(Route("PUT", "/", [](Req req){
     .. replace something ..
 }));
-server.add_route(Route("/", "PATCH", [](Req req){
+server.add_route(Route("PATCH", "/", [](Req req){
     .. modify something ..
 }));
-server.add_route(Route("/", "DELETE", [](Req req){
+server.add_route(Route("DELETE", "/", [](Req req){
     .. annihilate something ..
 }));
-server.add_route(Route("/", "OPTIONS", [](Req req){
+server.add_route(Route("OPTIONS", "/", [](Req req){
     .. appease something ..
 }));
-server.add_route(Route("/", "LINK", [](Req req){
+server.add_route(Route("LINK", "/", [](Req req){
     .. affiliate something ..
 }));
-server.add_route(Route("/", "UNLINK", [](Req req){
+server.add_route(Route("UNLINK", "/", [](Req req){
     .. separate something ..
 }));
-server.add_route(Route("/", "WTF", [](Req req){
+server.add_route(Route("WTF", "/", ](Req req){
     .. do what the f**k you want to something ..
 }));
 ```
