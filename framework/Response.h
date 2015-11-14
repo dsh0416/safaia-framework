@@ -14,6 +14,7 @@ namespace Safaia{
 
         Resp(int status_code, std::string str){
             this->status_code = status_code;
+            this->content = str;
         }
 
     };
