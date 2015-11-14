@@ -6,10 +6,10 @@ namespace Safaia{
 
     public:
         int status_code = 0;
+        std::string content = "";
 
         Resp(std::string str){
-            std::stringstream ss;
-            ss << str;
+            this->content = str;
         }
 
         Resp(int status_code, std::string str){

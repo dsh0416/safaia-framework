@@ -23,23 +23,28 @@ namespace Safaia{
         struct sockaddr_in addr;
 
         // TODO: Message Handle
-        static void serve(int sockfd, Log &log, bool &soft_stop){
+        static void serve(int sockfd, Log &log, bool &soft_stop, std::vector<Route> &vec_routes){
             int fd;
+            int size = (int)vec_routes.size();
             while (!soft_stop){
                 fd = accept(sockfd, NULL, NULL);
                 char buf[BUF_LEN];
                 read(fd, buf, BUF_LEN);
-                if (!strncmp(buf, "GET", 3)){
-                    std::string header = "HTTP/1.1 200 OK\r\nContent-type: text/html\r\n\r\n";
-                    std::string content = "<html><body><h1> Hello Safaia! </h1></body></html>\n";
-                    log.info("Server", "Received a Request\n" + std::string(buf));
-                    write(fd, header.c_str(), header.length());
-                    write(fd, content.c_str(), content.length());
-                    close(fd);
-                } else {
-                    soft_stop = true;
-                    close(fd);
+
+                Req req = Req(std::string(buf));
+                log.info("Server", "Received a Request\n" + std::string(buf));
+
+                for(int i = 0; i < size; i++){
+                    if (vec_routes[i].method == req.method && vec_routes[i].path == req.request_url){
+                        std::string header = "HTTP/1.1 200 OK\r\nContent-type: text/html\r\n\r\n";
+                        std::string content = vec_routes[i].function(req).content;
+                        write(fd, header.c_str(), header.length());
+                        write(fd, content.c_str(), content.length());
+                        close(fd);
+                    }
                 }
+                // No Matching
+                close(fd);
             }
 
         }
@@ -47,7 +52,7 @@ namespace Safaia{
         // IO Loop
         void loop(){
             for (int i = 0; i < thread; i++){
-                std::async(std::launch::async, serve, std::ref(sockfd), std::ref(log), std::ref(soft_stop));
+                std::async(std::launch::async, serve, std::ref(sockfd), std::ref(log), std::ref(soft_stop), std::ref(vec_routes));
             }
         }
 
