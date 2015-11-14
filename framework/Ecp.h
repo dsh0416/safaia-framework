@@ -17,6 +17,7 @@
 namespace Safaia{
 
     std::unordered_map<std::string, std::string> ecp_cache;
+    bool enable_ecp_cache = false;
 
     std::string& replace_all(std::string& str,const std::string& old_value,const std::string& new_value)
     {
@@ -32,6 +33,7 @@ namespace Safaia{
 
     class EcpAtom {
     public:
+
         std::map<std::string,std::string> dic;
         EcpAtom(){
         }
@@ -45,10 +47,29 @@ namespace Safaia{
     std::string ecp (std::string ecp_path, EcpAtom atom){
 
         std::string view;
-        auto cache_got = ecp_cache.find(ecp_path);
+        if (enable_ecp_cache){
+            auto cache_got = ecp_cache.find(ecp_path);
 
-        if (cache_got == ecp_cache.end()){
-            // Cache not found
+            if (cache_got == ecp_cache.end()){
+                // Cache not found
+                // Read View File from Disk
+                std::ifstream file;
+                file.open(ecp_path);
+                std::string temp_str;
+
+                while(file >> temp_str){
+                    view += temp_str;
+                    view += "\n";
+                }
+                file.close();
+
+                // Add to cache
+                ecp_cache[ecp_path] = view;
+            } else {
+                // Cache Found
+                view = cache_got->second;
+            }
+        } else {
             // Read View File from Disk
             std::ifstream file;
             file.open(ecp_path);
@@ -59,12 +80,6 @@ namespace Safaia{
                 view += "\n";
             }
             file.close();
-
-            // Add to cache
-            ecp_cache[ecp_path] = view;
-        } else {
-            // Cache Found
-            view = cache_got->second;
         }
 
 
