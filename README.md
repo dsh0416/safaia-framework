@@ -7,6 +7,8 @@ Safaia is designed to be an easy developing, maintaining, deploying light web fr
 ## Version
 Develop: 0.1.1 Alpha Test
 
+[![Build Status](https://travis-ci.org/dsh0416/safaia-framework.svg?branch=master)](https://travis-ci.org/dsh0416/safaia-framework)
+
 Stable: No Release
 
 ## Features

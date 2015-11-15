@@ -14,7 +14,10 @@ install:
   - ls /usr/local
   - ls /usr/local/bin
   - export PATH=/usr/local/bin:/usr/bin:${PATH}
-  - if [ "${TRAVIS_OS_NAME}" = "osx" ]; then
+  - if [ "${TRAVIS_OS_NAME}" = "linux" ]; then
+         sudo apt-get update
+      ;
+    else
          brew update
       && brew unlink cmake
       && brew install cmake
@@ -25,6 +28,7 @@ addons:
   apt:
     sources:
     - ubuntu-toolchain-r-test
+    - software-properties-common
     - george-edison55/cmake-3.x
     packages:
     - gcc-4.9
