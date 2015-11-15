@@ -18,6 +18,7 @@ install:
          wget --no-check-certificate http://www.cmake.org/files/v3.3/cmake-3.3.2-Linux-i386.tar.gz
       && tar -xzf cmake-3.3.2-Linux-i386.tar.gz
       && sudo cp -fR cmake-3.3.2-Linux-i386/* /usr
+      ;
     else
          brew update
       && brew unlink cmake
