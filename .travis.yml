@@ -15,7 +15,7 @@ install:
   - ls /usr/local/bin
   - export PATH=/usr/local/bin:/usr/bin:${PATH}
   - if [ "${TRAVIS_OS_NAME}" = "linux" ]; then
-         sudo apt-get update
+         sudo apt-get upgrade
       ;
     else
          brew update
