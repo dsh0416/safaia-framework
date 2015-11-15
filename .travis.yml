@@ -35,9 +35,14 @@ compiler:
   - gcc
   - clang
 
-script: ./travis.sh
+script: 
+	- mkdir build || true
+	- mkdir build/safaia_framework || true
+	- cd build/safaia_framework
+	- cmake ../../
+	- make
 
 notifications:
   email: false
-  
+
 sudo: false
