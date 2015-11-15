@@ -12,7 +12,6 @@ install:
   - ls /usr/local
   - ls /usr/local/bin
   - export PATH=/usr/local/bin:/usr/bin:${PATH}
-  - if [ "$CXX" == "clang++" ]; then export CXXFLAGS="-stdlib=libc++"; fi
   - if [ "${TRAVIS_OS_NAME}" = "linux" ]; then
          wget --no-check-certificate http://cmake.org/files/v3.4/cmake-3.4.0-Linux-x86_64.sh -O /tmp/cmake_install.sh
       && mkdir -p /tmp/cmake
@@ -35,7 +34,6 @@ addons:
     - gcc-4.9
     - g++-4.9
     - clang
-    - libc++
 
 os:
   - linux
@@ -46,6 +44,11 @@ language: cpp
 compiler:
   - gcc
   - clang
+
+matrix:
+  exclude:
+    - os: linux
+      compiler: clang
 
 script: 
   - mkdir build || true
