@@ -13,6 +13,8 @@
 
 namespace Safaia{
 
+    Log logger = Log();
+
     class Server {
 
         bool soft_stop = false;
@@ -57,12 +59,11 @@ namespace Safaia{
         // IO Loop
         void loop(){
             for (int i = 0; i < thread; i++){
-                std::async(std::launch::async, serve, std::ref(sockfd), std::ref(log), std::ref(soft_stop), std::ref(vec_routes));
+                std::async(std::launch::async, serve, std::ref(sockfd), std::ref(logger), std::ref(soft_stop), std::ref(vec_routes));
             }
         }
 
     public:
-        Log log = Log();
         int port = 21411;
         int thread = 4;
 
@@ -86,20 +87,20 @@ namespace Safaia{
         // Start running the server
         void run(){
             // Initializing
-            log.info("Server","safaia-framework v0.1 alpha");
-            log.info("Server","Safaia Server is initializing");
+            logger.info("Server","safaia-framework v0.1 alpha");
+            logger.info("Server","Safaia Server is initializing");
 
             // Establish TCP Socket
             sockfd = socket(AF_INET, SOCK_STREAM, 0);
             if (sockfd < 0) {
-                log.error("Server", "Socket Creation Failed!");
+                logger.error("Server", "Socket Creation Failed!");
                 exit(0);
             } else {
-                log.info("Server", "Socket Creation Succeeded!");
+                logger.info("Server", "Socket Creation Succeeded!");
             }
 
             if (thread < 1){
-                log.error("Server", "Thread Number Error!");
+                logger.error("Server", "Thread Number Error!");
             }
 
             memset(&addr, 0, sizeof(addr));
@@ -109,32 +110,32 @@ namespace Safaia{
 
             // Binding Address and Port
             if(bind(sockfd, (struct sockaddr *)&addr, sizeof(struct sockaddr_in))){
-                log.error("Server", "Port Binding Failed at Port " + std::to_string(port));
+                logger.error("Server", "Port Binding Failed at Port " + std::to_string(port));
                 exit(0);
             } else {
-                log.info("Server", "Port Binding Succeeded!");
+                logger.info("Server", "Port Binding Succeeded!");
             }
 
             // Start Listening
             listen(sockfd, 128);
 
             // Server Started
-            log.info("Server","Safaia Server has Started at Port " + std::to_string(port));
+            logger.info("Server","Safaia Server has Started at Port " + std::to_string(port));
 
             loop();
 
-            log.info("Server","Safaia Server has Stopped");
+            logger.info("Server","Safaia Server has Stopped");
         }
 
         // Soft Stop running the server
         void stop(){
             soft_stop = true;
-            log.info("Server","Safaia Server is Stopping");
+            logger.info("Server","Safaia Server is Stopping");
         }
 
         // Hard Stop running the server
         void stop_force(){
-            log.warning("Server","Safaia Server is Force Stopping");
+            logger.warning("Server","Safaia Server is Force Stopping");
             delete(this);
         }
 
