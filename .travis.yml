@@ -12,11 +12,12 @@ install:
   - ls /usr/local
   - ls /usr/local/bin
   - export PATH=/usr/local/bin:/usr/bin:${PATH}
+  - if [ "$CXX" == "clang++" ]; then export CXXFLAGS="-stdlib=libc++"; fi
   - if [ "${TRAVIS_OS_NAME}" = "linux" ]; then
          wget --no-check-certificate http://cmake.org/files/v3.4/cmake-3.4.0-Linux-x86_64.sh -O /tmp/cmake_install.sh
-      && sudo mkdir -p /opt/cmake
-      && sudo sh /tmp/cmake_install.sh --exclude-subdir --prefix=/opt/cmake
-      && export PATH="/opt/cmake/bin:${PATH}"
+      && sudo mkdir -p /tmp/cmake
+      && sudo sh /tmp/cmake_install.sh --exclude-subdir --prefix=/tmp/cmake
+      && export PATH="/tmp/cmake/bin:${PATH}"
       && cmake --version
       ;
     else
@@ -55,4 +56,4 @@ script:
 notifications:
   email: false
 
-sudo: true
+sudo: false
