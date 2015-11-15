@@ -5,6 +5,7 @@
 #include <netinet/in.h>
 #include <thread>
 #include <future>
+#include <unistd.h>
 #include "Log.h"
 #include "Route.h"
 #include "Ecp.h"

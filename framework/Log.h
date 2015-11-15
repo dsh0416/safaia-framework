@@ -6,6 +6,7 @@
 #include <iostream>
 #include <string>
 #include <regex>
+#include <unistd.h>
 
 namespace Safaia{
     class Log{
