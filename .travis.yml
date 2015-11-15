@@ -15,7 +15,7 @@ install:
   - ls /usr/local/bin
   - export PATH=/usr/local/bin:/usr/bin:${PATH}
   - if [ "${TRAVIS_OS_NAME}" = "linux" ]; then
-         wget https://cmake.org/files/v3.4/cmake-3.4.0-Linux-x86_64.sh -O /tmp/cmake_install.sh
+         wget --no-check-certificate http://cmake.org/files/v3.4/cmake-3.4.0-Linux-x86_64.sh -O /tmp/cmake_install.sh
       && sudo mkdir -p /opt/cmake
       && sudo sh /tmp/cmake_install.sh --exclude-subdir --prefix=/opt/cmake
       && export PATH="/opt/cmake/bin:${PATH}"
@@ -32,8 +32,6 @@ addons:
   apt:
     sources:
     - ubuntu-toolchain-r-test
-    - software-properties-common
-    - george-edison55/precise-backports
     packages:
     - gcc-4.9
     - g++-4.9
