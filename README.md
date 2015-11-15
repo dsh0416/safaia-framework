@@ -5,9 +5,10 @@
 Safaia is designed to be an easy developing, maintaining, deploying light web framework with high performance on C++. The inspiration of the framework comes from a gem on Ruby whose name is Sinatra. So that, the name of Safaia comes from the Japanese accent pronunciation of Sapphire to pay the respect of the designer of Ruby.
 
 ## Version
-Develop: 0.1.1 Alpha Test
 
 [![Build Status](https://travis-ci.org/dsh0416/safaia-framework.svg?branch=master)](https://travis-ci.org/dsh0416/safaia-framework)
+
+Develop: 0.1.1 Alpha Test
 
 Stable: No Release
 
