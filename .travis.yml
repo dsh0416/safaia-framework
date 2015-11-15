@@ -16,7 +16,7 @@ install:
   - export PATH=/usr/local/bin:/usr/bin:${PATH}
   - if [ "${TRAVIS_OS_NAME}" = "linux" ]; then
          wget https://cmake.org/files/v3.4/cmake-3.4.0-Linux-x86_64.sh -O /tmp/cmake_install.sh
-  	  && sudo mkdir -p /opt/cmake
+      && sudo mkdir -p /opt/cmake
       && sudo sh /tmp/cmake_install.sh --exclude-subdir --prefix=/opt/cmake
       && export PATH="/opt/cmake/bin:${PATH}"
       && cmake --version
