@@ -8,12 +8,30 @@
 
 install:
 # /usr/bin/gcc is 4.6 always, but gcc-X.Y is available.
-- if [ "$CXX" = "g++" ]; then export CXX="g++-4.9" CC="gcc-4.9"; fi
+  - if [ "$CXX" = "g++" ]; then export CXX="g++-4.9" CC="gcc-4.9"; fi
 # /usr/bin/clang is our version already, and clang-X.Y does not exist.
 #- if [ "$CXX" = "clang++" ]; then export CXX="clang++-3.7" CC="clang-3.7"; fi
-- ls /usr/local
-- ls /usr/local/bin
-- export PATH=/usr/local/bin:/usr/bin:${PATH}
+  - ls /usr/local
+  - ls /usr/local/bin
+  - export PATH=/usr/local/bin:/usr/bin:${PATH}
+  - if [ "${TRAVIS_OS_NAME}" = "linux" ]; then
+         wget --no-check-certificate http://www.cmake.org/files/v3.3/cmake-3.3.2-Linux-i386.tar.gz
+      && tar -xzf cmake-3.3.2-Linux-i386.tar.gz
+      && sudo cp -fR cmake-3.3.2-Linux-i386/* /usr
+      && sudo apt-add-repository -y ppa:ubuntu-toolchain-r/test
+      && sudo apt-add-repository -y ppa:beineri/opt-qt542
+      && sudo apt-get -qq update
+      && sudo apt-get -qq install g++-4.8 libc6-i386 qt54location qt54multimedia qt54sensors qt54svg qt54tools qt54webchannel qt54webkit
+      && export CXX="g++-4.8"
+      && export CC="gcc-4.8"
+      ;
+    else
+         brew update
+      && brew unlink cmake
+      && brew install cmake qt5
+      && chmod -R 755 /usr/local/opt/qt5/*
+      ;
+    fi
 
 addons:
   apt:
@@ -36,11 +54,11 @@ compiler:
   - clang
 
 script: 
-- mkdir build || true
-- mkdir build/safaia_framework || true
-- cd build/safaia_framework
-- cmake ../../
-- make
+  - mkdir build || true
+  - mkdir build/safaia_framework || true
+  - cd build/safaia_framework
+  - cmake ../../
+  - make
 
 notifications:
   email: false
