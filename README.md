@@ -1,4 +1,6 @@
 # Safaia Framework for C++
+
+[![Join the chat at https://gitter.im/dsh0416/safaia-framework](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/dsh0416/safaia-framework?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 ![Safaia Logo](https://raw.githubusercontent.com/dsh0416/safaia-framework/master/doc/res/logo.png)
 
 ## Brief
