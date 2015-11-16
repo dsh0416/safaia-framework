@@ -22,7 +22,7 @@ Type `http://127.0.0.1:21411/` in your browser and you would see a `Hello World`
 `main.cpp` is the entrance of the whole program with `int main()`. The default `main.cpp` gives some examples, you could delete them and create your own. Let's start your project with the following code.
 
 ```
-#include "framework/Safaia.h"
+#include "framework/safaia/Safaia.h"
 using namespace Safaia;
 int main(){
     auto server = Server();

@@ -1,6 +1,5 @@
 # Safaia Framework for C++
 
-[![Join the chat at https://gitter.im/dsh0416/safaia-framework](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/dsh0416/safaia-framework?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 ![Safaia Logo](https://raw.githubusercontent.com/dsh0416/safaia-framework/master/doc/res/logo.png)
 
 ## Brief
@@ -25,8 +24,14 @@ Stable: No Release
 - Running on one process and selectable threads
 
 ## Feedback
-Using the `ISSUE` on GitHub
 
+If you have suggestions or ideas should be discussed, you could use the `GITTER`.
+
+[![Join the chat at https://gitter.im/dsh0416/safaia-framework](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/dsh0416/safaia-framework?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
+If you have found issues of the project, please use the `ISSUE` on GitHub
+
+Pull requests should be filled with sufficient reasons, understandable comments and should pass the travis-ci, so that it could be easily followed up for further development. THX! xD
 
 ## License
 See the file `LICENSE`
