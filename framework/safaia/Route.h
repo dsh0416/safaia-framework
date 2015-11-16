@@ -7,7 +7,6 @@
 namespace Safaia{
     class Route{
     public:
-
         std::string path;
         std::regex regex_path;
         bool is_regex;

@@ -15,7 +15,7 @@ int main(){
     server.add_route("GET", "/request_url", [](Req req){
         EcpAtom atom;
         atom.store("url",req.request_url);
-        return Resp(ecp("./views/request_url.html",atom));
+        return Resp(Ecp::render("./views/request_url.html",atom));
     });
 
     server.run();

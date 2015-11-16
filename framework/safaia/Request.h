@@ -3,9 +3,8 @@
 
 namespace Safaia{
     class Req{
-
     public:
-
+        // TODO: Finish Request Constructions
         std::string method = "";
         std::string request_url = "";
         std::string protocol = "";
@@ -19,6 +18,7 @@ namespace Safaia{
         std::string referer = "";
         std::string user_agent = "";
 
+        // TODO: Finish Request Deserialization
         Req(std::string str){
             std::stringstream ss;
             ss << str;

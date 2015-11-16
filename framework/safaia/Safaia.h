@@ -17,7 +17,6 @@ namespace Safaia{
     Log logger = Log();
 
     class Server {
-
         bool soft_stop = false;
         std::vector<Route> vec_routes;
 
@@ -28,6 +27,9 @@ namespace Safaia{
         static void serve(int sockfd, Log &log, bool &soft_stop, std::vector<Route> &vec_routes){
             int fd;
             int size = (int)vec_routes.size();
+
+            Resp not_found = Resp(404, "404 Not Found");
+
             while (!soft_stop){
                 fd = accept(sockfd, NULL, NULL);
                 char buf[BUF_LEN];
@@ -37,21 +39,20 @@ namespace Safaia{
                 log.info("Server", "Received a Request\n" + std::string(buf));
 
                 for(int i = 0; i < size; i++){
-                    if (!vec_routes[i].is_regex && vec_routes[i].method == req.method && vec_routes[i].path == req.request_url){
-                        std::string header = "HTTP/1.1 200 OK\r\nContent-type: text/html\r\n\r\n";
-                        std::string content = vec_routes[i].function(req).content;
+                    if ((!vec_routes[i].is_regex && vec_routes[i].method == req.method && vec_routes[i].path == req.request_url) || (vec_routes[i].is_regex && vec_routes[i].method == req.method && std::regex_match(req.request_url, vec_routes[i].regex_path))){
+                        Resp response = vec_routes[i].function(req);
+                        std::string header = "HTTP/1.1 " + response.status_code +"\r\nContent-type: text/html\r\n\r\n";
+                        std::string body = response.body;
                         write(fd, header.c_str(), header.length());
-                        write(fd, content.c_str(), content.length());
-                        close(fd);
-                    } else if (vec_routes[i].is_regex && vec_routes[i].method == req.method && std::regex_match(req.request_url, vec_routes[i].regex_path)) {
-                        std::string header = "HTTP/1.1 200 OK\r\nContent-type: text/html\r\n\r\n";
-                        std::string content = vec_routes[i].function(req).content;
-                        write(fd, header.c_str(), header.length());
-                        write(fd, content.c_str(), content.length());
+                        write(fd, body.c_str(), body.length());
                         close(fd);
                     }
                 }
-                // No Matching
+                // No Matching, return 404
+                std::string header = "HTTP/1.1 " + not_found.status_code +"\r\nContent-type: text/html\r\n\r\n";
+                std::string body = not_found.body;
+                write(fd, header.c_str(), header.length());
+                write(fd, body.c_str(), body.length());
                 close(fd);
             }
 
@@ -88,7 +89,7 @@ namespace Safaia{
         // Start running the server
         void run(){
             // Initializing
-            logger.info("Server","safaia-framework v0.1 alpha");
+            logger.info("Server","safaia-framework v0.1.2 alpha");
             logger.info("Server","Safaia Server is initializing");
 
             // Establish TCP Socket

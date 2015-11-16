@@ -1,4 +1,5 @@
 #!/usr/bin/env sh
+# Install the latest version of CMake
 if [ "${TRAVIS_OS_NAME}" = "linux" ]; then
     wget --no-check-certificate http://cmake.org/files/v3.4/cmake-3.4.0-Linux-x86_64.sh -O /tmp/cmake_install.sh
     mkdir -p /tmp/cmake
@@ -10,6 +11,7 @@ else
     brew unlink cmake
     brew install cmake
 fi
+# Start building with CMake
 mkdir build || true
 mkdir build/safaia_framework || true
 cd build/safaia_framework
