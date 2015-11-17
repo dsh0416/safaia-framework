@@ -24,11 +24,9 @@ namespace Safaia{
         struct sockaddr_in addr;
 
         // TODO: Message Handle
-        static void serve(int sockfd, Log &log, bool &soft_stop, std::vector<Route> &vec_routes){
+        static void serve(int sockfd, Log &log, bool &soft_stop, std::vector<Route> &vec_routes, Resp &not_found){
             int fd;
             int size = (int)vec_routes.size();
-
-            Resp not_found = Resp(404, "404 Not Found");
 
             while (!soft_stop){
                 fd = accept(sockfd, NULL, NULL);
@@ -61,13 +59,15 @@ namespace Safaia{
         // IO Loop
         void loop(){
             for (int i = 0; i < thread; i++){
-                std::async(std::launch::async, serve, std::ref(sockfd), std::ref(logger), std::ref(soft_stop), std::ref(vec_routes));
+                std::async(std::launch::async, serve, std::ref(sockfd), std::ref(logger), std::ref(soft_stop), std::ref(vec_routes), std::ref(not_found));
             }
         }
 
     public:
         int port = 21411;
         int thread = 4;
+
+        Resp not_found = Resp(404, "404 Not Found");
 
         Server(){
 
