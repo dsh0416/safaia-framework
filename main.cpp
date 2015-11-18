@@ -8,14 +8,10 @@ int main(){
         return Resp("Hello World");
     });
 
-    server.add_route("GET", std::regex("/hello/(.*)"), [](Req req){
-        return Resp(200, "Hello World");
-    });
-
-    server.add_route("GET", "/request_url", [](Req req){
+    server.add_route("GET", std::regex("/hello-request/(.*)"), [](Req req){
         EcpAtom atom;
         atom.store("url",req.request_url);
-        return Resp(Ecp::render("./views/request_url.html",atom));
+        return Resp(Ecp::render("./views/request_url.html", atom));
     });
 
     server.run();
