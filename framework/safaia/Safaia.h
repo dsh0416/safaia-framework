@@ -24,7 +24,7 @@ namespace Safaia{
         struct sockaddr_in addr;
 
         // TODO: Message Handle
-        static void serve(int sockfd, Log &log, bool &soft_stop, std::vector<Route> &vec_routes, Resp &not_found){
+        static void serve(int sockfd, Log log, bool &soft_stop, std::vector<Route> vec_routes, Resp not_found){
             int fd;
             int size = (int)vec_routes.size();
 
@@ -60,7 +60,7 @@ namespace Safaia{
         void loop(){
             std::vector<std::thread> threads;
             for (int i = 0; i < thread; i++){
-                threads.push_back(std::thread(serve, std::ref(sockfd), std::ref(logger), std::ref(soft_stop), std::ref(vec_routes), std::ref(not_found)));
+                threads.push_back(std::thread(serve, std::ref(sockfd), logger, std::ref(soft_stop), vec_routes, not_found));
             }
             for (int i = 0; i < thread; i++){
                 threads[i].join();

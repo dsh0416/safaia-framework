@@ -7,6 +7,7 @@
 #include <string>
 #include <regex>
 #include <unistd.h>
+#include <cstdio>
 
 namespace Safaia{
     class Log{
@@ -23,16 +24,40 @@ namespace Safaia{
         }
 
         void info(std::string tag, std::string str){
-            if (level > 2)
-                std::cout << (ansi_color && is_stdout ? GREEN : "") << "[Info] " << tag << ": "<< str << (ansi_color && is_stdout ? RESET : "") << std::endl;
+            if (level > 2) {
+                if (ansi_color && is_stdout) {
+                    printf(GREEN);
+                }
+                printf("[Info] %s: %s", tag.c_str(), str.c_str());
+                if (ansi_color && is_stdout) {
+                    printf(RESET);
+                }
+                printf("\n");
+            }
         }
         void warning(std::string tag, std::string str){
-            if (level > 1)
-                std::cout << (ansi_color && is_stdout ? YELLOW : "") <<"[Warning] " << tag << ": "<< str << (ansi_color && is_stdout ? RESET : "") << std::endl;
+            if (level > 1) {
+                if (ansi_color && is_stdout) {
+                    printf(YELLOW);
+                }
+                printf("[Warning] %s: %s", tag.c_str(), str.c_str());
+                if (ansi_color && is_stdout) {
+                    printf(RESET);
+                }
+                printf("\n");
+            }
         }
         void error(std::string tag, std::string str){
-            if (level > 0)
-                std::cerr << (ansi_color && is_stdout ? RED : "") << "[Error] " << tag << ": "<< str << (ansi_color && is_stdout ? RESET : "") << std::endl;
+            if (level > 1) {
+                if (ansi_color && is_stdout) {
+                    printf(RED);
+                }
+                printf("[Error] %s: %s", tag.c_str(), str.c_str());
+                if (ansi_color && is_stdout) {
+                    printf(RESET);
+                }
+                printf("\n");
+            }
         }
     };
 }
