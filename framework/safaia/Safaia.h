@@ -24,7 +24,7 @@ namespace Safaia{
         struct sockaddr_in addr;
 
         // TODO: Message Handle
-        static void serve(int sockfd, Log log, bool &soft_stop, std::vector<Route> vec_routes, Resp not_found){
+        static void serve(int sockfd, Log &log, bool &soft_stop, std::vector<Route> &vec_routes, Resp &not_found){
             int fd;
             int size = (int)vec_routes.size();
 
@@ -32,9 +32,9 @@ namespace Safaia{
                 fd = accept(sockfd, NULL, NULL);
                 char buf[BUF_LEN];
                 read(fd, buf, BUF_LEN);
+                bool has_found = false;
 
                 Req req = Req(std::string(buf));
-                log.info("Server", "Received a Request\n" + std::string(buf));
 
                 for(int i = 0; i < size; i++){
                     if ((!vec_routes[i].is_regex && vec_routes[i].method == req.method && vec_routes[i].path == req.request_url) || (vec_routes[i].is_regex && vec_routes[i].method == req.method && std::regex_match(req.request_url, vec_routes[i].regex_path))){
@@ -43,15 +43,22 @@ namespace Safaia{
                         std::string body = response.body;
                         write(fd, header.c_str(), header.length());
                         write(fd, body.c_str(), body.length());
+                        log.info("Server", "200");
+                        // TODO: Targeted Result: 127.0.0.1 - - [20/Nov/2015:17:47:37 +0800] "POST /user/12312 HTTP/1.1" 200 30 0.0062
                         close(fd);
+                        has_found = true;
+                        break;
                     }
                 }
-                // No Matching, return 404
-                std::string header = "HTTP/1.1 " + not_found.status_code +"\r\nContent-type: text/html\r\n\r\n";
-                std::string body = not_found.body;
-                write(fd, header.c_str(), header.length());
-                write(fd, body.c_str(), body.length());
-                close(fd);
+                if (!has_found){
+                    // No Matching, return 404
+                    std::string header = "HTTP/1.1 " + not_found.status_code +"\r\nContent-type: text/html\r\n\r\n";
+                    std::string body = not_found.body;
+                    write(fd, header.c_str(), header.length());
+                    write(fd, body.c_str(), body.length());
+                    close(fd);
+                    log.info("Server", "404");
+                }
             }
 
         }
@@ -60,7 +67,7 @@ namespace Safaia{
         void loop(){
             std::vector<std::thread> threads;
             for (int i = 0; i < thread; i++){
-                threads.push_back(std::thread(serve, std::ref(sockfd), logger, std::ref(soft_stop), vec_routes, not_found));
+                threads.push_back(std::thread(serve, std::ref(sockfd), std::ref(logger), std::ref(soft_stop), std::ref(vec_routes), std::ref(not_found)));
             }
             for (int i = 0; i < thread; i++){
                 threads[i].join();
