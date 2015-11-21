@@ -58,9 +58,14 @@ namespace Safaia{
 
         // IO Loop
         void loop(){
+            std::vector<std::thread> threads;
             for (int i = 0; i < thread; i++){
-                std::async(std::launch::async, serve, std::ref(sockfd), std::ref(logger), std::ref(soft_stop), std::ref(vec_routes), std::ref(not_found));
+                threads.push_back(std::thread(serve, std::ref(sockfd), std::ref(logger), std::ref(soft_stop), std::ref(vec_routes), std::ref(not_found)));
             }
+            for (int i = 0; i < thread; i++){
+                threads[i].join();
+            }
+
         }
 
     public:
