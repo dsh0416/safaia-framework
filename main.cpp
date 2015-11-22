@@ -10,7 +10,7 @@ int main(){
 
     server.add_route("GET", std::regex("/hello-request/(.*)"), [](Req req){
         EcpAtom atom;
-        atom.store("url",req.request_url);
+        atom.store("url", req.request_url);
         return Resp(Ecp::render("./views/request_url.html", atom));
     });
 
