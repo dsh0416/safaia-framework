@@ -38,12 +38,18 @@ namespace Safaia{
 
                 for(int i = 0; i < size; i++){
                     if ((!vec_routes[i].is_regex && vec_routes[i].method == req.method && vec_routes[i].path == req.request_url) || (vec_routes[i].is_regex && vec_routes[i].method == req.method && std::regex_match(req.request_url, vec_routes[i].regex_path))){
-                        Resp response = vec_routes[i].function(req);
+                        Resp response = Resp(500, "500 Internal Error");
+                        try {
+                            response = vec_routes[i].function(req);
+                        }catch(std::exception& e) {
+                            std::string err_message(e.what());
+                            log.error("Handle", err_message);
+                        }
                         std::string header = "HTTP/1.1 " + response.status_code +"\r\nContent-type: text/html\r\n\r\n";
                         std::string body = response.body;
                         write(fd, header.c_str(), header.length());
                         write(fd, body.c_str(), body.length());
-                        log.info("Server", "200");
+                        log.info("Server", response.status_code);
                         // TODO: Targeted Result: 127.0.0.1 - - [20/Nov/2015:17:47:37 +0800] "POST /user/12312 HTTP/1.1" 200 30 0.0062
                         close(fd);
                         has_found = true;

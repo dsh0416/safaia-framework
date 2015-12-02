@@ -25,15 +25,15 @@ namespace Safaia{
 
         void info(std::string tag, std::string str){
             if (level > 2)
-                printf("%s[Info] %s: %s%s\n",(ansi_color && is_stdout) ? GREEN : "", tag.c_str(), str.c_str(),(ansi_color && is_stdout) ? RESET : "");
+                printf("%s[Info] %s: %s%s\n",(ansi_color && is_stdout) ? GREEN : "", tag.c_str(), str.c_str(), (ansi_color && is_stdout) ? RESET : "");
         }
         void warning(std::string tag, std::string str){
             if (level > 1)
-                printf("%s[Warning] %s: %s%s\n",(ansi_color && is_stdout) ? YELLOW : "", tag.c_str(), str.c_str(),(ansi_color && is_stdout) ? RESET : "");
+                printf("%s[Warning] %s: %s%s\n",(ansi_color && is_stdout) ? YELLOW : "", tag.c_str(), str.c_str(), (ansi_color && is_stdout) ? RESET : "");
         }
         void error(std::string tag, std::string str){
             if (level > 0)
-                printf("%s[Error] %s: %s%s\n",(ansi_color && is_stdout) ? RED : "", tag.c_str(), str.c_str(),(ansi_color && is_stdout) ? RESET : "");
+                printf("%s[Error] %s: %s%s\n",(ansi_color && is_stdout) ? RED : "", tag.c_str(), str.c_str(), (ansi_color && is_stdout) ? RESET : "");
         }
     };
 }

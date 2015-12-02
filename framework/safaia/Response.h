@@ -4,7 +4,7 @@
 
 namespace Safaia{
     class Resp{
-        const std::unordered_map<int, std::string> status_map = {
+        std::unordered_map<int, std::string> status_map = {
                 {100, "100 Continue"},
                 {101, "101 Switching Protocols"},
                 {200, "200 OK"},
