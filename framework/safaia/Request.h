@@ -1,22 +1,24 @@
 #include <string>
 #include <sstream>
+#include <unordered_map>
 
 namespace Safaia{
     class Req{
     public:
-        // TODO: Finish Request Constructions
         std::string method = "";
         std::string request_url = "";
         std::string protocol = "";
+        std::unordered_map<std::string, std::string> header;
         std::string accept = "";
         std::string accept_encoding = "";
         std::string accept_language = "";
-        std::string body = "";
         std::string cache_control = "";
         std::string cookie = "";
         std::string host = "";
         std::string referer = "";
         std::string user_agent = "";
+
+        std::string body = "";
 
         // TODO: Finish Request Deserialization
         Req(std::string str){
