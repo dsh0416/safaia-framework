@@ -6,6 +6,10 @@
 #include <thread>
 #include <future>
 #include <unistd.h>
+#include <ctime>
+#include <iomanip>
+#include <codecvt>
+#include <sstream>
 #include "Log.h"
 #include "Route.h"
 #include "Ecp.h"
@@ -37,7 +41,8 @@ namespace Safaia{
                 Req req = Req(std::string(buf));
 
                 for(int i = 0; i < size; i++){
-                    if ((!vec_routes[i].is_regex && vec_routes[i].method == req.method && vec_routes[i].path == req.request_url) || (vec_routes[i].is_regex && vec_routes[i].method == req.method && std::regex_match(req.request_url, vec_routes[i].regex_path))){
+                    if ((!vec_routes[i].is_regex && vec_routes[i].method == req.method && vec_routes[i].path == req.request_url) ||
+                            (vec_routes[i].is_regex && vec_routes[i].method == req.method && std::regex_match(req.request_url, vec_routes[i].regex_path))){
                         Resp response = Resp(500, "500 Internal Error");
                         try {
                             response = vec_routes[i].function(req);
@@ -49,8 +54,13 @@ namespace Safaia{
                         std::string body = response.body;
                         write(fd, header.c_str(), header.length());
                         write(fd, body.c_str(), body.length());
-                        log.info("Server", response.status_code);
-                        // TODO: Targeted Result: 127.0.0.1 - - [20/Nov/2015:17:47:37 +0800] "POST /user/12312 HTTP/1.1" 200 30 0.0062
+
+                        time_t t = time(0);
+                        std::stringstream log_text;
+                        log_text << "[" << std::put_time(std::localtime(&t), "%c %Z") << "] \"" <<
+                                req.method << " " << req.request_url << " " << req.protocol << "\" " << response.status_code;
+                        log.info("Server", log_text.str());
+
                         close(fd);
                         has_found = true;
                         break;
@@ -63,7 +73,12 @@ namespace Safaia{
                     write(fd, header.c_str(), header.length());
                     write(fd, body.c_str(), body.length());
                     close(fd);
-                    log.info("Server", "404");
+
+                    time_t t = time(0);
+                    std::stringstream log_text;
+                    log_text << "[" << std::put_time(std::localtime(&t), "%c %Z") << "] \"" <<
+                    req.method << " " << req.request_url << " " << req.protocol << "\" " << "404 Not Found";
+                    log.info("Server", log_text.str());
                 }
             }
 
