@@ -51,8 +51,9 @@ namespace Safaia{
                             for (size_t j = 0; j < regex_match.size(); j++) {
                                 std::ssub_match sub_match = regex_match[j];
                                 req.regex_result.push_back(sub_match.str());
-                                // Type std::ssub_match could be converse to std::string with the .str() method in C++11
-                                // But still some IDE may incorrectly trust it as an error
+                                // std::ssub_match could be convert to std::string with the .str() method in C++11 official documentation
+                                // But clang++ may do nothing cause std::ssub_match could also implicit convert to std::string
+                                // So that some IDE like CLion may incorrectly trust it as an error
                             }
                         }
 
