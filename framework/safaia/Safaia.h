@@ -42,8 +42,20 @@ namespace Safaia{
 
                 for(int i = 0; i < size; i++){
                     if ((!vec_routes[i].is_regex && vec_routes[i].method == req.method && vec_routes[i].path == req.request_url) ||
-                            (vec_routes[i].is_regex && vec_routes[i].method == req.method && std::regex_match(req.request_url, vec_routes[i].regex_path))){
+                        (vec_routes[i].is_regex && vec_routes[i].method == req.method && std::regex_match(req.request_url, vec_routes[i].regex_path))){
                         Resp response = Resp(500, "500 Internal Error");
+
+                        if(vec_routes[i].is_regex){
+                            std::smatch regex_match;
+                            std::regex_match(req.request_url, regex_match, vec_routes[i].regex_path);
+                            for (size_t j = 0; j < regex_match.size(); j++) {
+                                std::ssub_match sub_match = regex_match[j];
+                                req.regex_result.push_back(sub_match.str());
+                                // Type std::ssub_match could be converse to std::string with the .str() method in C++11
+                                // But still some IDE may incorrectly trust it as an error
+                            }
+                        }
+
                         try {
                             response = vec_routes[i].function(req);
                         }catch(std::exception& e) {
@@ -54,15 +66,15 @@ namespace Safaia{
                         std::string body = response.body;
                         write(fd, header.c_str(), header.length());
                         write(fd, body.c_str(), body.length());
+                        close(fd);
+                        has_found = true;
 
                         time_t t = time(0);
                         std::stringstream log_text;
                         log_text << "[" << std::put_time(std::localtime(&t), "%c %Z") << "] \"" <<
-                                req.method << " " << req.request_url << " " << req.protocol << "\" " << response.status_code;
+                        req.method << " " << req.request_url << " " << req.protocol << "\" " << response.status_code;
                         log.info("Server", log_text.str());
 
-                        close(fd);
-                        has_found = true;
                         break;
                     }
                 }

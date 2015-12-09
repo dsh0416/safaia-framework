@@ -1,6 +1,7 @@
 #include <string>
 #include <sstream>
 #include <unordered_map>
+#include <vector>
 
 namespace Safaia{
     class Req{
@@ -19,6 +20,8 @@ namespace Safaia{
         std::string user_agent = "";
 
         std::string body = "";
+
+        std::vector<std::string> regex_result;
 
         // TODO: Finish Request Deserialization
         Req(std::string str){
