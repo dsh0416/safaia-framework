@@ -27,6 +27,7 @@ install:
   - export PATH=/usr/local/bin:/usr/bin:${PATH}
   - ./travis-before.sh
   - if [ "${TRAVIS_OS_NAME}" = "linux" ]; then export PATH="/tmp/cmake/bin:${PATH}"; fi
+  - env | sort
 
 script: ./travis.sh
 
@@ -35,8 +36,8 @@ after_success:
 
 env:
   matrix:
-    - UNIT_TEST = true
-    - UNIT_TEST = false
+    - UNIT_TEST=true
+    - UNIT_TEST=false
 
 notifications:
   email: false
