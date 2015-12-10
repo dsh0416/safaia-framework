@@ -6,7 +6,11 @@ cmake ../../
 make
 
 # Unit Test Coverage
-if [ "${TRAVIS_OS_NAME}" = "linux" && "$UNIT_TEST" = "true" ]; then
-    ./safaia-framework
+if [ "${TRAVIS_OS_NAME}" = "linux" ] && [ "$UNIT_TEST" = "true" ]; then
+    ./safaia_framework
     gcov-4.9 ../../tests/main.cpp --object-directory ./CMakeFiles/safaia_framework.dir/tests
+elif [ "$UNIT_TEST" = "true" ]; then
+    ls
+    ./safaia_framework
+    gcov ../../tests/main.cpp --object-directory ./CMakeFiles/safaia_framework.dir/tests
 fi
