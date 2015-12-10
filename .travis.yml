@@ -31,7 +31,7 @@ install:
 script: ./travis.sh
 
 after_success:
-  - if [ "$UNIT_TEST" = "true"]; then coveralls --exclude lib --exclude tests --exclude build --gcov-options '\-lp'; fi
+  - if [ "$UNIT_TEST" = "true" ]; then coveralls --exclude lib --exclude tests --exclude build --gcov-options '\-lp'; fi
 
 env:
   matrix:
