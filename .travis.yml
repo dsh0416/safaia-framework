@@ -26,6 +26,7 @@ install:
   - if [ "$CXX" = "g++" ]; then export CXX="g++-4.9" CC="gcc-4.9"; fi
   - export PATH=/usr/local/bin:/usr/bin:${PATH}
   - ./travis-before.sh
+  - if [ "${TRAVIS_OS_NAME}" = "linux" ]; then export PATH="/tmp/cmake/bin:${PATH}"; fi
 
 script: ./travis.sh
 
