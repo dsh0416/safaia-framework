@@ -25,6 +25,7 @@ matrix:
 install:
   - if [ "$CXX" = "g++" ]; then export CXX="g++-4.9" CC="gcc-4.9"; fi
   - export PATH=/usr/local/bin:/usr/bin:${PATH}
+  - ./travis-before.sh
 
 script: ./travis.sh
 
