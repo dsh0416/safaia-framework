@@ -32,7 +32,7 @@ install:
 script: ./travis.sh
 
 after_success:
-  - if [ "$UNIT_TEST" = "true" ]; then coveralls --exclude lib --exclude tests --exclude build --build-root ./build/safaia_framework/ --gcov-options '\-lp'; fi
+  - if [ "$UNIT_TEST" = "true" ]; then coveralls --exclude lib --exclude tests --gcov-options '\-lp'; fi
 
 env:
   matrix:
