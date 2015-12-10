@@ -41,26 +41,29 @@ namespace Safaia{
                     tmp_ss << ln;
                     std::string header_name;
                     std::string header_content;
+
                     tmp_ss >> header_name;
                     getline(tmp_ss, header_content);
-                    header[header_name.substr(0, header_name.length() - 1)] = header_content.substr(1, header_content.length() - 1);
+
+                    header_name = header_name.substr(0, header_name.length() - 1);
+                    header_content = header_content.substr(1, header_content.length() - 1);
+
+                    header[header_name] = header_content;
+
+                    if (header_name == "Accept") accept = header_content;
+                    else if (header_name == "Accept-Encoding") accept_encoding = header_content;
+                    else if (header_name == "Accept-Language") accept_language = header_content;
+                    else if (header_name == "Cache-Control") cache_control = header_content;
+                    else if (header_name == "Cookie") cookie = header_content;
+                    else if (header_name == "Host") host = header_content;
+                    else if (header_name == "Referer") referer = header_content;
+                    else if (header_name == "User-Agent") user_agent = header_content;
                 }
                 if(stage){
                     body += ln;
                     body += "\n";
                 }
             }
-
-            // Fast headers
-            if(header.find("Accept")!=header.end()) accept = header["Accept"];
-            if(header.find("Accept-Encoding")!=header.end()) accept_encoding = header["Accept-Encoding"];
-            if(header.find("Accept-Language")!=header.end()) accept_language = header["Accept-Language"];
-            if(header.find("Cache-Control")!=header.end()) cache_control = header["Cache-Control"];
-            if(header.find("Cookie")!=header.end()) cookie = header["Cookie"];
-            if(header.find("Host")!=header.end()) host = header["Host"];
-            if(header.find("Referer")!=header.end()) referer = header["Referer"];
-            if(header.find("User-Agent")!=header.end()) user_agent = header["User-Agent"];
-
         }
     };
 }
