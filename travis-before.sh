@@ -4,8 +4,14 @@ if [ "${TRAVIS_OS_NAME}" = "linux" ]; then
     mkdir -p /tmp/cmake
     sh /tmp/cmake_install.sh --exclude-subdir --prefix=/tmp/cmake
     cmake --version
+    pip install --user cpp-coveralls
 else
     brew update
     brew unlink cmake
     brew install cmake
+    brew install pyenv
+    pyenv install 2.7.6
+    pyenv rehash
+    pip install cpp-coveralls
+    pyenv rehash
 fi

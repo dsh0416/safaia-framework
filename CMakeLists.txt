@@ -1,7 +1,9 @@
 cmake_minimum_required(VERSION 3.2)
 project(safaia_framework)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -pthread")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -pthread -fprofile-arcs -ftest-coverage")
+
+set(CMAKE_CXX_OUTPUT_EXTENSION_REPLACE 1)
 
 set(SOURCE_FILES main.cpp)
 
