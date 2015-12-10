@@ -146,7 +146,7 @@ namespace Safaia{
         // Start running the server
         void run(){
             // Initializing
-            logger.info("Server","safaia-framework v0.1.2 alpha");
+            logger.info("Server","safaia-framework v0.1.3 alpha");
             logger.info("Server","Safaia Server is initializing");
 
             // Establish TCP Socket

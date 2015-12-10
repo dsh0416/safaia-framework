@@ -3,7 +3,7 @@
 ## Brief Introduction
 Safaia framework is designed for high performance and concurrency light web framework with C++. It's easy to use, test and deploy. 
 
-This tutorial is based on version v0.1.2 alpha. 
+This tutorial is based on version v0.1.3 alpha. 
 
 ## Getting Started
 First off, you should clone the whole project to your own disk. To make this happen, open your Terminal, and type the following command.
@@ -12,7 +12,7 @@ First off, you should clone the whole project to your own disk. To make this hap
 
 Safaia framework use `CMake` to build the project. It's easy to find the `CMakeList.txt` file under the project directory. `CMake` is a powerful tool to build your project. You'd better learn how to use it [here](http://www.cmake.org/). IDEs like `CLion` could automatically manage and build with `CMake`.
 
-Importantly, the minimum version to make this project is cmake 3.2. GCC 4.9 is what we tested compiler on Linux. Reports also shown that the latest clang could also compile the project on Linux, but we haven't tested it. Both gcc and clang is supported and officially tested on Mac OS X. `travis.sh` is the building process we use to pass the `travis-ci`, it may be advisable if you have troubles when compiling and building the project.
+Importantly, the minimum version to make this project is cmake 3.2. GCC 4.9 is what we supported compiler on Linux. The latest clang compiler could also compile the project on Linux what if you are using libc++ but not libstdc++. Both gcc and clang is supported and officially tested on Mac OS X. `travis.sh` is the building process we use to pass the `travis-ci`, it may be advisable if you have troubles when compiling and building the project.
 
 After you build the server, you could just run the executive file.
 
@@ -63,7 +63,7 @@ server.add_route(Route("UNLINK", "/", [](Req req){
     .. separate something ..
 }));
 server.add_route(Route("WTF", "/", ](Req req){
-    .. do what the f**k you want to something ..
+    .. do what the f**k you want on something ..
 }));
 ```
 
