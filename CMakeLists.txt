@@ -7,7 +7,7 @@ set(CMAKE_CXX_OUTPUT_EXTENSION_REPLACE 1)
 
 if ($ENV{UNIT_TEST})
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-arcs -ftest-coverage")
-    set(SOURCE_FILES tests/main.cpp)
+    set(SOURCE_FILES main-test.cpp)
     message(STATUS "unit tested")
 else()
     set(SOURCE_FILES main.cpp)
