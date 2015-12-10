@@ -5,7 +5,13 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -pthread -fprofile-arcs -ftes
 
 set(CMAKE_CXX_OUTPUT_EXTENSION_REPLACE 1)
 
-set(SOURCE_FILES main.cpp tests/main.cpp)
+if ($ENV{UNIT_TEST})
+    set(SOURCE_FILES tests/main.cpp)
+    message(STATUS "tested")
+else()
+    set(SOURCE_FILES main.cpp)
+    message(STATUS "not tested")
+endif ($ENV{UNIT_TEST})
 
 set(SAFAIA_HEADER_FILES framework/safaia/Safaia.h framework/safaia/Log.h framework/safaia/Request.h framework/safaia/Route.h framework/safaia/Ecp.h framework/safaia/Response.h)
 
