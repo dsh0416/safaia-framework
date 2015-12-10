@@ -44,7 +44,6 @@ namespace Safaia{
                     tmp_ss >> header_name;
                     getline(tmp_ss, header_content);
                     header[header_name.substr(0, header_name.length() - 1)] = header_content.substr(1, header_content.length() - 1);
-                    std::cout << header_name << std::endl;
                 }
                 if(stage){
                     body += ln;
