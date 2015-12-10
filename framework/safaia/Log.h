@@ -3,6 +3,7 @@
 #include <regex>
 #include <unistd.h>
 #include <cstdio>
+#include <cstring>
 
 namespace Safaia{
     class Log{
@@ -18,8 +19,10 @@ namespace Safaia{
 
         Log(){
             // CLion still does not support ASCII color control, disable the feature by default
-            if (std::regex_match(std::string(getenv("XPC_SERVICE_NAME")), std::regex("(.*)(CLion)(.*)")))
-                ansi_color = false;
+            if (getenv("XPC_SERVICE_NAME") != NULL){
+                if (std::regex_match(std::string(getenv("XPC_SERVICE_NAME")), std::regex("(.*)(CLion)(.*)")))
+                    ansi_color = false;
+            }
         }
 
         void info(std::string tag, std::string str){
