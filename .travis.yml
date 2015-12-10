@@ -32,7 +32,8 @@ install:
 script: ./travis.sh
 
 after_success:
-  - if [ "$UNIT_TEST" = "true" ]; then coveralls --exclude lib --exclude tests --gcov-options '\-lp'; fi
+  - if [ "$UNIT_TEST" = "true" ] && [ "${TRAVIS_OS_NAME}" = "linux" ]; then coveralls --gcov /usr/bin/gcov-4.9 --exclude lib --exclude tests --gcov-options '\-lp'; fi
+  - if [ "$UNIT_TEST" = "true" ] && [ "${TRAVIS_OS_NAME}" = "osx" ]; then coveralls --exclude lib --exclude tests --gcov-options '\-lp'; fi
 
 env:
   matrix:
