@@ -71,7 +71,13 @@ namespace Safaia{
 
                         time_t t = time(0);
                         std::stringstream log_text;
-                        log_text << "[" << std::put_time(std::localtime(&t), "%c %Z") << "] \"" <<
+                        std::string formatted_time = ctime(&t);
+                        formatted_time = formatted_time.substr(0, formatted_time.length() - 1);
+                        // std::put_time(std::localtime(&t) is recommended for formatting time,
+                        // but <codecvt> is not involved in stdlibc++ with gcc 4.9,
+                        // use ctime(&t) for compatibility temporarily.
+
+                        log_text << "[" << formatted_time << "] \"" <<
                         req.method << " " << req.request_url << " " << req.protocol << "\" " << response.status_code;
                         log.info("Server", log_text.str());
 
@@ -88,7 +94,13 @@ namespace Safaia{
 
                     time_t t = time(0);
                     std::stringstream log_text;
-                    log_text << "[" << std::put_time(std::localtime(&t), "%c %Z") << "] \"" <<
+                    std::string formatted_time = ctime(&t);
+                    formatted_time = formatted_time.substr(0, formatted_time.length() - 1);
+                    // std::put_time(std::localtime(&t) is recommended for formatting time,
+                    // but <codecvt> is not involved in stdlibc++ with gcc 4.9,
+                    // use ctime(&t) for compatibility temporarily.
+
+                    log_text << "[" << formatted_time << "] \"" <<
                     req.method << " " << req.request_url << " " << req.protocol << "\" " << "404 Not Found";
                     log.info("Server", log_text.str());
                 }
