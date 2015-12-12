@@ -14,6 +14,17 @@ int main(){
     setUnitTest.add(ASSERT("String Not Equal", "foo", "bar", NOT_EQUAL));
     unitTest.add(setUnitTest);
 
+    // Safaia Request Module Unit Test
+    auto setRequest = CaseSet("Safaia Request Module Unit Test");
+    auto request1 = Req("GET /login.html HTTP/1.1\r\nHost: 127.0.0.1\nConnection: keep-alive\nCache-Control: no-cache\nAccept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8\nUpgrade-Insecure-Requests: 1\nUser-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36\nReferer: http://127.0.0.1/\nAccept-Encoding: gzip, deflate, sdch\nAccept-Language: zh-CN,zh;q=0.8,en-US;q=0.6,en;q=0.4,ja;q=0.2\r\n\r\nTest Body");
+    setRequest.add(ASSERT("Request Method", request1.method, "GET", EQUAL));
+    setRequest.add(ASSERT("Request Url", request1.request_url, "/login.html", EQUAL));
+    setRequest.add(ASSERT("Protocol", request1.protocol, "HTTP/1.1", EQUAL));
+    setRequest.add(ASSERT("Fast Header", request1.host, "127.0.0.1", EQUAL));
+    setRequest.add(ASSERT("Standard Header", request1.header["Connection"], "keep-alive", EQUAL));
+    setRequest.add(ASSERT("Body", request1.body, "Test Body\n", EQUAL));
+    unitTest.add(setRequest);
+
     // Safaia Response Module Unit Test
     auto setResponse = CaseSet("Safaia Response Module Unit Test");
     auto response1 = Resp("Hello World");
@@ -23,6 +34,8 @@ int main(){
     setResponse.add(ASSERT("Response Body", response2.body, "Hello World", EQUAL));
     setResponse.add(ASSERT("Response Status Code", response2.status_code, "201 Created", EQUAL));
     unitTest.add(setResponse);
+    auto response3 = Resp(999, "Hello Internal Error");
+    setResponse.add(ASSERT("Parse Status Code Error", response3.status_code, "500 Internal Server Error", EQUAL));
 
     // Safaia Route Module Unit Test
     auto setRoute = CaseSet("Safaia Route Module Unit Test");
