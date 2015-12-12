@@ -12,6 +12,7 @@
 #include "Log.h"
 #include "Route.h"
 #include "Ecp.h"
+#include "UnitTest.h"
 
 #define BUF_LEN 1028
 

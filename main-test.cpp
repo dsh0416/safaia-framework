@@ -3,16 +3,16 @@ using namespace Safaia;
 
 int main(){
     auto server = Server();
+    auto unit_test = UnitTest();
 
-    server.add_route("GET", "/", [](Req req){
-        return Resp("Hello World");
-    });
+    auto set = CaseSet("Hello Test");
+    set.add(ASSERT("num", 1, 1, EQUAL));
+    set.add(ASSERT("bool", true, false, NOT_EQUAL));
+    set.add(ASSERT("string", "hello", "hello", EQUAL));
+    set.add(ASSERT("plus", 1 + 1, 2, EQUAL));
+    set.add(ASSERT("not_eq", 1, 2, NOT_EQUAL));
+    unit_test.add(set);
 
-    server.add_route("GET", std::regex("/hello-request/(.*)"), [](Req req){
-        EcpAtom atom;
-        atom.store("url", req.request_url);
-        return Resp(Ecp::render("./views/request_url.html", atom));
-    });
-
+    unit_test.run();
     return 0;
 }

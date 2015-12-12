@@ -19,8 +19,9 @@ namespace Safaia{
 
         Log(){
             // CLion still does not support ASCII color control, disable the feature by default
-            if (getenv("XPC_SERVICE_NAME") != NULL){
-                if (std::regex_match(std::string(getenv("XPC_SERVICE_NAME")), std::regex("(.*)(CLion)(.*)")))
+            char * env = getenv("XPC_SERVICE_NAME");
+            if (env != NULL){
+                if (std::regex_match(std::string(env), std::regex("(.*)(clion)(.*)")))
                     ansi_color = false;
             }
         }
