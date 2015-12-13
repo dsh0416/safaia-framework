@@ -5,6 +5,20 @@ int main(){
     auto unitTest = UnitTest();
 
     // Unit Test Diagnostics
+    auto secUnitTest = UnitTest();
+    auto tstUnitTestSuc = CaseSet("Unit Test Success Exampe");
+    tstUnitTestSuc.add(ASSERT("THIS MUST BE A SUCCESS", 1, 1, EQUAL));
+    secUnitTest.add(tstUnitTestSuc);
+    int sec = secUnitTest.run();
+    std::cout << std::endl;
+
+    auto failUnitTest = UnitTest();
+    auto tstUnitTestFail = CaseSet("Unit Test Failure Example");
+    tstUnitTestFail.add(ASSERT("THIS MUST BE A FAILURE", 1, 0, EQUAL));
+    failUnitTest.add(tstUnitTestFail);
+    int fail = failUnitTest.run();
+    std::cout << std::endl;
+
     auto setUnitTest = CaseSet("Unit Test Diagnostics");
     setUnitTest.add(ASSERT("Integer Equal", 42, 42, EQUAL));
     setUnitTest.add(ASSERT("Integer Not Equal", 12, 450, NOT_EQUAL));
@@ -12,6 +26,8 @@ int main(){
     setUnitTest.add(ASSERT("Double Not Equal", -1.5, 1.5, NOT_EQUAL));
     setUnitTest.add(ASSERT("String Equal", "Lolicon", "Lolicon", EQUAL));
     setUnitTest.add(ASSERT("String Not Equal", "foo", "bar", NOT_EQUAL));
+    setUnitTest.add(ASSERT("Example Failure Unit Test Result", fail, 0, NOT_EQUAL));
+    setUnitTest.add(ASSERT("Example Success Unit Test Result", sec, 0, EQUAL));
     unitTest.add(setUnitTest);
 
     // Safaia Request Module Unit Test
@@ -54,6 +70,5 @@ int main(){
     auto server = Server();
     unitTest.add(setSafaia);
 
-    unitTest.run();
-    return 0;
+    return unitTest.run();
 }

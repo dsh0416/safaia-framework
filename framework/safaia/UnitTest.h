@@ -130,7 +130,7 @@ namespace Safaia{
             case_sets.push_back(caseSet);
         }
 
-        void run(){
+        int run(){
             int total = 0;
             int passed = 0;
 
@@ -158,9 +158,11 @@ namespace Safaia{
             if (passed == total){
                 std::cout << "Test Finished: " <<
                         str_green << passed << " Passed / " << total << " Total" << str_reset << std::endl;
+                return 0;
             } else {
                 std::cout << "Test Finished: " <<
                         str_red << passed << " Passed / " << total << " Total" << str_reset << std::endl;
+                return 1;
             }
         }
     };
