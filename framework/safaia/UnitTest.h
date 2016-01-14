@@ -22,6 +22,32 @@ namespace Safaia{
         std::string result;
         bool passed = false;
 
+        ASSERT(std::string name, std::string reality, std::string expected, int assert) {
+            if (assert == EQUAL) {
+                this->name = name;
+                std::stringstream ss;
+                ss << reality << " == " << expected << " ";
+                if (reality == expected) {
+                    ss << str_green << "Passed" << str_reset;
+                    passed = true;
+                } else {
+                    ss << str_red << "Failed" << str_reset;
+                }
+                result = ss.str();
+            } else if (assert == NOT_EQUAL) {
+                this->name = name;
+                std::stringstream ss;
+                ss << reality << " != " << expected << " ";
+                if (reality != expected) {
+                    ss << str_green << "Passed" << str_reset;
+                    passed = true;
+                } else {
+                    ss << str_red << "Failed" << str_reset;
+                }
+                result = ss.str();
+            }
+        }
+
         template <typename tname>
         ASSERT(std::string name, tname reality, tname expected, int assert){
             if (assert == EQUAL){
@@ -40,32 +66,6 @@ namespace Safaia{
                 std::stringstream ss;
                 ss << reality << " != " << expected << " ";
                 if (reality != expected){
-                    ss << str_green << "Passed" << str_reset;
-                    passed = true;
-                } else {
-                    ss << str_red << "Failed" << str_reset;
-                }
-                result = ss.str();
-            }
-        }
-        
-        ASSERT(std::string name, std::string reality, std::string expected, int assert) {
-            if (assert == EQUAL) {
-                this->name = name;
-                std::stringstream ss;
-                ss << reality << " == " << expected << " ";
-                if (reality == expected) {
-                    ss << str_green << "Passed" << str_reset;
-                    passed = true;
-                } else {
-                    ss << str_red << "Failed" << str_reset;
-                }
-                result = ss.str();
-            } else if (assert == NOT_EQUAL) {
-                this->name = name;
-                std::stringstream ss;
-                ss << reality << " != " << expected << " ";
-                if (reality != expected) {
                     ss << str_green << "Passed" << str_reset;
                     passed = true;
                 } else {
